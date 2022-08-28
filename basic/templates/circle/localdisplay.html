@@ -1,0 +1,68 @@
+{% load i18n %}
+{% if delta is False %}
+<div class="card circle-card">
+        <div class="">
+            <h6 class="" style="margin: 0.5rem; color: gray; text-align: center;">{% translate "Your Neighbourhood Circles" %}</h6>
+        </div>
+        
+
+        {% for circle in circles %}
+              
+        
+                {% if forloop.first %}
+                <div class="row mx-auto card-body circle-local-body">
+                {% endif %}
+                    <div class="col-lg-2 bg-light shadow-sm circle-elements">
+                        <div class=" image-cropper-circle" >
+                            <a href="{% url 'circle' circle.name %}"><img src="{{circle.imageURL}}"  alt=""></a>
+                        </div>
+                        <p class="card-text">{{circle.name}}</p>
+                        <div class="circle-join-btn-div">
+                            
+                            <!-- {% if flag == request.user.userregister %}
+                                <a href="" class="btn btn-sm  btn-block">Leave</a>
+                            {% else %}
+                                <a href="" class="btn btn-sm  btn-block">Join</a>
+                            {% endif %} -->
+
+                            <form class="" action="{% url 'join' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="circle_id" value="{{circle.id}}">
+                                {% if request.user.userregister not in circle.members.all %}
+                                    <button style="width: 4rem;" type="submit" class="btn btn-sm  btn-block" id="">{% translate "Join" %}</button>
+                                {% else %}
+                                    <button style="width: 4rem;" type="submit" class="btn btn-sm  btn-block" id="">{% translate "Leave" %}</button>
+                                {% endif %}
+                                
+                            </form>
+                            
+                        </div>
+                        
+                        
+                    </div>
+                {% if forloop.counter|divisibleby:5 %} 
+                </div> <div class="row mx-auto">{% endif %} {% if forloop.last %}</div> {% endif %}
+
+            
+        {% endfor %}
+
+        
+
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{% url 'all-circle' %}" class="btn btn-light  circle-showmore-btn">{% translate "show more" %}</a>
+            <a href="{% url 'createcircle' %}" class="btn btn-light  circle-showmore-btn">{% translate "create circle" %}</a>
+        </div>
+        
+        
+</div>
+{% else %}
+
+<div>
+    <div class="card card-body create-post-card">
+        <div >
+            <a href="{% url 'createcircle' %}" style="font-weight: 700; color: gray;" class="btn btn-light btn-block  circle-showmore-btn">Create a Circle</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+

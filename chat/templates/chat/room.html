@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+
+body {
+  /* margin: 0 auto;
+  max-width: 800px;
+  padding: 0 20px; */
+  
+}
+
+#display{
+  height: 30rem;
+  overflow-y:scroll;
+  width: 50rem;
+}
+
+.container {
+  border: 2px solid #e1f0f2;
+  background-color: #dcf0f3;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0;
+  
+  
+}
+
+.darker{
+  border-color: #e1f0f2;
+  background-color: rgb(250, 250, 250);
+  
+}
+
+.darker-message{
+  /* border-color: rgb(244, 251, 255); */
+  background-color: rgb(255, 255, 255);
+  max-height: auto;
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 0 2rem 2rem 2rem;
+}
+
+
+.darker-activeusers {
+  /* border-color: rgb(247, 247, 247); */
+  background-color: rgb(243, 242, 242);
+  
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 100%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: rgb(90, 90, 90);
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
+</style>
+
+<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+
+
+
+
+
+<body>
+
+  <style>
+    input[type=text], select {
+    width: 90%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+  
+    input[type=submit] {
+    float: right;
+    width: 10%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+    background-color: #45a049;
+    }
+  
+
+    .leave{
+      background-color: #c43c3c;
+      color: white;
+      padding: 0.7rem 3rem;
+      margin: 0 0rem;
+      margin-left: 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+    
+    /* div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    } */
+
+  .rooms{
+    margin-top: 1rem;
+  }
+
+  .dark{
+    text-align: left;
+    padding-left: 1rem;
+    padding-top: 0.7rem;
+    margin-bottom: -0.6rem;
+    border-radius: 1rem;
+    border-color: #ccc;
+    background-color: #ffffff;
+    height: 2rem;
+  }
+
+
+  .dot {
+    height: 1rem;
+    width: 1rem;
+    margin-left: 2rem;
+    margin-top: 0rem;
+    background-color: rgb(0, 208, 35);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .home-container{
+       display: grid;
+       grid-template-columns:2fr 4fr 2fr;
+   }
+
+
+
+
+  @media (max-width:780px){
+    .rooms-available{
+      display: none;
+    }
+
+    #display{
+      width: 20rem;
+    }
+
+    .active-users{
+      position: fixed;
+      bottom: 0;
+      z-index: 9;
+      width: 100%;
+      height: 10.5rem;
+      margin-left: -1rem;
+      padding-top: 0rem;
+      background-color: rgb(255, 255, 255);
+      overflow-y: scroll;
+    }
+
+    .active-users-h3{
+      display: none;
+    }
+
+    #active{
+      font-size: medium;
+      width: 98%;
+    }
+
+    .dot{
+      margin: 0;
+    }
+
+    .leave{
+      background-color: #c43c3c;
+      color: white;
+      padding-left: 40%;
+      padding-right: 38.5%;
+      margin: 0 0rem;
+      margin-left: rem;
+
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100% !important;
+    }
+
+    input[type=text], select {
+    width: 75%;
+    padding: 12px 20px;
+    margin-left: 1rem;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
+  
+    input[type=submit] {
+    float: right;
+    width: 20%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    #display{
+      height: 21.5rem;
+      overflow-y:scroll;
+    }
+  
+}
+
+  </style>
+
+
+
+<div style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%); 
+height: 3rem; color: white;margin-top: -1rem; border-radius: 1rem 1rem 0 0;">
+ <h2 class="di" style="padding: 0.6rem; padding-left: 2rem;">{{display_name}} - Heythere</h2>
+</div>
+    
+
+
+<div class="row container home-container" style="border-radius: 0 0 1rem 1rem;">
+
+      <div class="col-lg-6 col-md-12 col-12 rooms-available">
+        <center>
+          <h3>Rooms available </h3>
+          <img src="{{friend.username}}" alt="">
+        </center>
+
+        <div class="rooms" style="overflow-y: scroll; height: 30rem;">
+          {% for room in display_rooms %}
+            {% for i in circle %}
+              {% if room.name == i|safe %}
+                <ul>
+                  <a style="text-decoration: none; color: black;" href="{% url 'room' room.name room.name %}"><li class="dark" style="font-weight: bold;">{{room.name}}</li></a>
+                </ul>
+              {% endif %}
+            {% endfor %}
+          {% endfor %}
+        </div>
+        
+      </div>
+
+
+
+      <div class="col-lg-6 chat-box">
+        <form id="post-form">
+          {% csrf_token %}
+          <input type="hidden" name="username" id="username" value="{{username}}"/>
+          <input type="hidden" name="room_id" id="room_id" value="{{room_details.id}}"/>
+          <input type="text" name="message" id="message" width="100px" />
+          <input type="submit" value="send">
+        </form>
+
+
+        <div id="display">
+
+
+
+        </div>
+      </div>
+
+      <div class="active-users">
+
+        <div style="margin-top: 1.3rem;">
+          <a style="text-decoration: none;" class="leave" href="{% url 'leave-chat' room %}">Leave Chat</a>
+        </div>
+
+        <center>
+          <br>
+          <h3 class="active-users-h3">Active Users </h3>
+        </center>
+
+        <div id="active" class="col-lg-6" style="overflow-y: scroll; height: 27rem;">
+        
+    
+
+        </div>
+
+      </div>
+      
+
+      
+
+
+</div>
+
+
+
+</body>
+
+
+
+<!-- Real Time Messages -->
+<script>
+  $(document).ready(function(){
+  
+  setInterval(function(){
+      $.ajax({
+          type: 'GET',
+          url : "/getMessages/{{room}}/",
+          success: function(response){
+              console.log(response);
+              $("#display").empty();
+              for (var key in response.messages)
+              {
+                  var temp="<div class='container darker-message'><b>@"+response.messages[key].user+"</b><span class='time-right'><small>"+response.messages[key].date+"</small></span><p>"+response.messages[key].value+"</p></div>";
+                  $("#display").append(temp);
+              }
+          },
+          error: function(response){
+              alert('An error occured')
+          }
+      });
+  },1000);
+  })
+  </script>
+  <!-- End of Real Time Messages -->
+
+
+<style>
+  
+</style>
+
+
+<!-- Real time Active Users -->
+<script>
+  $(document).ready(function(){
+  
+  setInterval(function(){
+      $.ajax({
+          type: 'GET',
+          url : "/getActiveUsers/{{room}}/",
+          success: function(response){
+              console.log(response);
+              $("#active").empty();
+              for (var key in response.activeusers)
+              {
+                  var temp1="<div class='container darker-activeusers'><b><span class='dot'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+response.activeusers[key].username+"</span></b></div>";
+                  $("#active").append(temp1);
+              }
+          },
+          error: function(response){
+              alert('An error occured')
+          }
+      });
+  },1000);
+  })
+  </script>
+<!-- End of Real time Active Users -->
+
+
+
+
+
+
+<!-- Message Send  -->
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/send',
+      data:{
+          username:$('#username').val(),
+          room_id:$('#room_id').val(),
+          message:$('#message').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+         //alert(data)
+      }
+    });
+    document.getElementById('message').value = ''
+  });
+</script>
+<!-- End of Message Send  -->
+
+
+</html>

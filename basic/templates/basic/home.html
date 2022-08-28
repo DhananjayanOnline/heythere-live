@@ -1,0 +1,22 @@
+{% extends 'basic/main.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+
+<div class="row home-container container" >
+    <div class="col col-lg-2 col-sm-12">
+        {% include 'basic/sidebar.html' %}
+    </div>
+
+    <div class="col col-lg-6 col-sm-12">
+        {% include 'home/localfeed.html' %}
+    </div>
+
+    <div class="col col-lg-4 col-sm-12">
+        {% include 'home/globalfeed.html' %}
+    </div>
+</div>
+{% endblock content %}
+

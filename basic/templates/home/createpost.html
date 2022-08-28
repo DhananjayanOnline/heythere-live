@@ -1,0 +1,75 @@
+{% extends 'basic/main.html' %}
+
+{% block content %}
+{% load i18n %}
+{% load crispy_forms_tags %} 
+
+<style>
+    body{
+        background-color: #e5ffff;
+    }
+</style>
+
+<div class="create-post">
+    <p class="title shadow-lg display-4">{% translate 'Whats on your mind' %}, <span>{{request.user.userregister}} ?</span></p>
+</div>
+
+
+<div class="post-card card shadow-lg">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- {{form|crispy}} -->
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="">{{form.caption|as_crispy_field}}</div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="image-div col-lg-12">
+                <div class="">{{form.image|as_crispy_field}}</div>
+
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview" class="image-preview__image">
+                    <span class="image-preview__default-text">Image Preview</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="visibility row">
+
+            <div class="col-lg-6">
+                <div class="">{{form.local_visibility|as_crispy_field}}</div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="">{{form.global_visibility|as_crispy_field}}</div>
+            </div>
+
+        </div>
+        
+
+
+        <div class="d-none">{{form.circle|as_crispy_field}}</div>
+        <div class="d-none">{{form.creator}}</div>
+        <div class="d-none">{{form.likes}}</div>
+        <div class="d-none">{{form.commets}}</div>
+    
+        <input class="btn btn-info btn-block" type="submit" value="{% translate 'Submit' %}">
+    </form>
+</div>
+
+
+
+<!-- <script>
+    
+</script> -->
+
+
+{% endblock content %}

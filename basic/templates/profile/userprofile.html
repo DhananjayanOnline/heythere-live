@@ -1,0 +1,340 @@
+{% extends 'basic/main.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+
+
+<div class="row container profile-user">
+
+    <div class="col-lg-2 col-md-2 col-12">
+        {% include 'basic/sidebar.html' %}
+    </div>
+
+    
+    <div class="col-lg-10 col-12">
+        <div id="carouselExampleSlidesOnly" style="" class="carousel slide profile-carousal" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active banner">
+                    {% if user.cover_photo %}
+                  <img src="{{user.cover_photo.url}}" class="d-block w-100" alt="...">
+                    {% else %}
+                  <img src="{% static 'images/hero/default-cover.gif' %}" class="d-block w-100" alt="...">
+                    {% endif %}
+              </div>
+            </div>
+        </div>
+
+        <!-- only for mobile view profile picture -->
+
+            <div class="desktop-view-hidden">
+                <div class="profile-image-div">
+                    <div class="card" style="width: 18rem;">
+                        <div class="image-cropper">
+                            {% if user.image %}
+                            <a href="{{user.imageURL}}"><img src="{{user.imageURL}}" class="card-img-top" alt="..."></a>
+                            {% else %}
+                            <img src="{% static 'images/hero/default-profile.png' %}" class="card-img-top" alt="...">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- end of mobile view profile picture -->
+
+        <div class="bio">
+            <div class="card bio-card ">
+                <div class="card-body">
+                  <div style="float: left;">
+                    <h5 class="card-title">{{user.fname}} {{user.lname}}</h5>
+                    <p class="card-text">{{user.bio}}</p>
+                  </div>
+
+                  {% if user.username != request.user.userregister|safe %}
+                  <div class="add-friend" style="float: right;">
+                    <!-- <a href="http://" class="btn btn-info">Message</a> -->
+                    {% if flag is False %}
+                        <a href="{% url 'addfriend' user.username %}" class="btn add-friend-btn">{% translate 'Add Friend' %}</a>
+                    {% endif %}
+
+                    {% for i in friend %}
+                        
+                        {% if i.status == 'send'%}
+                            <a href="{% url 'cancel-request' user.username %}" class="btn cancel-request-btn">{% translate 'Cancel Request' %}</a>
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if alpha == True %}
+                        <a href="{% url 'accept-request' user True %}" class="btn accept-request-btn">{% translate 'Accept' %}</a>
+                        <a href="{% url 'decline-request' user True %}" class="btn decline-request-btn" >{% translate 'Decline' %}</a>
+                    {% endif %}
+
+                    {% if delta == True %}
+                            <a href="{% url 'unfriend' user.username %}" class="btn friends-btn"></a>
+                            <a href="{% url 'private-chat' user.username %}" class="btn Message-btn">{% translate 'Message' %}</a>
+
+                    {% endif %}
+
+                  </div>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+
+          <div class="row">
+
+            <div class="col-lg-6 col-md-5 col-12">
+
+                {% if request.user.userregister.neighbourhood is None %}
+        
+                    <div class="alert alert-warning Neighbourhood-warning" role="alert">
+                        {% translate 'Welcome' %} {{request.user}}, <br> {% translate 'Add your neighbourhood here' %} <i style="font-size: large;" class="bi bi-arrow-right ml-2"></i>
+                    </div>         
+        
+                {% else %}
+        
+                {% if user.username == request.user.userregister|safe %}
+                    <div>
+                        <div class="card create-post-card" style="width: 33rem;">
+                            <div class="card-body input-group mb-3">
+                                <div class="input-group create-post-card-body">
+                                    {% if user.image %}
+                                        <img src="{{user.imageURL}}" width="40rem" style="border-radius: 50%;" alt=""> &nbsp; &nbsp;
+                                    {% else %}
+                                        <img src="{% static 'images/hero/default-profile.png' %}" width="40rem" style="border-radius: 50%;" alt=""> &nbsp; &nbsp;
+                                    {% endif %}
+                                    <a style="width: 24rem;" href="{% url 'create-post' user.id %}"><input type="text" class="form-control" placeholder="{% translate 'Create Post' %}" aria-label="Recipient's username" aria-describedby="button-addon2"></a>
+                                    <div class="input-group-append">
+                                    <button class="btn" type="button" id="button-addon2"><i class="bi bi-image"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+        
+        
+        
+                    <div class=" profile-feed">
+                        <!-- <h5 style="margin-left:70px">Local Feed</h5> -->
+                        {% for i in userpost %}
+        
+        
+                        <div class="card card-profile shadow-sm">
+        
+                            {% if request.user.username == i.creator|safe %}
+                            <div class="profile-upandde">
+                                <a class="trash float-right" href="{% url 'delete-post' i.id %}" style="margin-right: 1rem;"><i class="fa-solid fa-trash"></i></a>
+                                
+                                <a class="update-link float-right" href="{% url 'update-post' i.id %}" style="margin-right: 1rem;"><i class="fa-solid fa-pen-to-square"></i></a>
+                                
+                            </div>
+                            {% endif %}
+                            <div>
+                                <div class="profile-creator-and-date">
+                                    <b><span class="username-profilefeed"><a href="/peopleprofile/{{i.creator}}">@{{i.creator}}</a></span></b> 
+                                    {% if i.circle is not None %}
+                                        <b><span class="circlename-profilefeed">{{i.circle}}</span></b>
+                                    {% endif %}
+                                    <small>{{i.date_create}}</small>
+                                </div>
+                                
+                                <a href="{% url 'previewpost' i.id %}" ><img src="{{i.image.url}}" class="card-img-top profilefeed-img" alt="..."></a>
+                            </div>
+                            
+                    
+        
+        
+                            <form class="like-profile" action="{% url 'like-post' 'p' user.username %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{i.id}}">
+                                {% if request.user not in i.likes.all %}
+                                    <button style="width: 4rem;" type="submit" class="btn  btn-sm btn-like shadow-sm" id=""><i class="bi bi-hand-thumbs-up"></i> {{i.likes.all.count}}</button>
+                                {% else %}
+                                    <button style="width: 4rem;color: rgb(204, 52, 52);" type="submit" class="btn  btn-sm btn-unlike shadow-sm id=""><i class="bi bi-hand-thumbs-up-fill "></i> {{i.likes.all.count}}</button>
+                                {% endif %}
+                                
+                            </form>
+                            
+        
+                            <a id="comment-profile" class="btn  btn-sm comment-profile shadow-sm" href="{% url 'previewpost' i.id %}">
+                                <i class="fa-regular fa-comment"></i> {{i.comments.all.count}}</a>
+                            
+                            <div class="caption-profile">
+                                <div class="card-body">
+                                    <p class="card-text">{{i.caption}}</p>
+                                </div>
+                    
+                            </div>
+                    
+                        </div>
+        
+                        {% endfor %}
+                    </div>
+        
+                {% endif %}
+               
+            </div>
+
+
+            <div class="col-lg-6 col-md-5 col-12">
+
+
+                <div class="profile-details">
+                    <div class="profile-image-div">
+                        <div class="card" style="width: 18rem;">
+                            <div class="image-cropper">
+                                {% if user.image %}
+                                <a href="{{user.imageURL}}"><img src="{{user.imageURL}}" class="card-img-top" alt="..."></a>
+                                {% else %}
+                                <img src="{% static 'images/hero/default-profile.png' %}" class="card-img-top" alt="...">
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if request.user.userregister.neighbourhood is None %}
+            
+                    <div class="neighbourhood-submit" id="neighbourhood-submit">
+                        <div class="card border-info mb-3">
+                            <div class="card-header text-info">{% translate 'Enter your neighbourhood' %}</div>
+                            <div class="card-body text-info">
+                                <div>
+                                    <form action="" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" name="neighbourhood" placeholder="{% translate 'Neighbourhood' %}" style="text-transform: capitalize;" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                            <div class="input-group-append" style="width: 30%;">
+                                            <input type="submit" value="{% translate 'Submit' %}" class="btn btn-outline-info" id="button-addon2">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                          </div>
+                    </div>
+
+                    {% endif %}
+            
+            
+                    <div>
+                        <div id="about" class="card border-info profile-details-card">
+                            <div class="container card-body text-dark">
+                                
+                                {% if user.username == request.user.userregister.username %}
+                                    <a class="btn btn-outline-info btn-sm btn-block" href="{% url 'updateprofile' user.username %}">{% translate 'Update Profile' %}</a>
+                                {% endif %}
+                                <br>
+                                <p>{% translate 'Neighbourhood' %} : <strong>{{user.neighbourhood}}</strong></p>
+                                <br>
+                                <p>{% translate 'First Name' %} : <strong>{{user.fname}}</strong></p>
+                                <br>
+                                <p>{% translate 'Last Name' %} : <strong>{{user.lname}}</strong></p>
+                                <br>
+                                <p>{% translate 'Email' %} : <strong>{{user.email}}</strong></p>
+                                <br>
+                                <p>{% translate 'Phone Number' %} : <strong>{{user.phonenumber}}</strong></p>
+                                <br>
+                                <p>{% translate 'Gender' %} : <strong>{{user.gender}}</strong></p>
+                                <br>
+                                <p>{% translate 'Bio' %} : <strong>{{user.bio}}</strong></p>
+                                <br>
+                                <p>{% translate 'Date of Birth' %} : <strong>{{user.dob}}</strong></p>
+                                <br>
+                                <p>{% translate 'Age' %} : <strong>{{user.age}}</strong></p>
+                            </div>
+                          </div>
+                    </div>
+
+                    <div class="members">
+                        <div class="card members-card">
+                            <div class="">
+                                <h6 class="" style="margin: 0.5rem; color: gray; text-align: center;">{% translate 'Friends' %}</h6>
+                            </div>
+
+                            {% if friends %}
+                    
+                                {% for member in friends %}
+                                {% if forloop.first %}
+                                <div class="row mx-auto card-body members-local-body">
+                                {% endif %}
+                                    <div class="col-lg-2 members-elements">
+                                        <div class="image-cropper-member-circle" >
+                                            {% if member.image %}
+                                            <a href="{% url 'userprofile' member.username %}"><img src="{{member.imageURL}}"  alt=""></a>
+                                            {% else %}
+                                            <a href="{% url 'userprofile' member.username %}"><img src="{% static 'images/hero/default-profile.png' %}"  alt=""></a>
+                                            {% endif %}
+                                        </div>
+                                        <p class="card-text">{{member.username}}</p>
+                                    </div>
+                                {% if forloop.counter|divisibleby:5 %} 
+                                </div> <div class="row mx-auto">{% endif %} {% if forloop.last %}</div> {% endif %}
+                                {% endfor %}
+
+
+                                {% if f >= 10 %}
+                                <div >
+                                    <a href="http://" class="btn btn-light btn-block  circle-showmore-btn">show more</a>
+                                </div>
+                                {% endif %}
+                            
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+        
+
+          </div>
+    </div>
+
+
+    
+
+
+
+    
+
+
+
+{% endblock content %}
+
+
+
+
+<!-- <div>
+            <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="neighbourhood" placeholder="Recipient's username" style="text-transform: capitalize;" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append" style="width: 50%;">
+                    <input type="submit" value="Submit" class="btn btn-outline-secondary" id="button-addon2">
+                    </div>
+                </div>
+            </form>
+        </div> -->
+
+
+        <!-- <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <br>
+            <br>
+        
+            <label for="neighbourhood">Neighbourhood :</label>
+            <input name="neighbourhood" type="text" style="text-transform: capitalize;"></input>
+            <br>
+            <br>
+            <input type="submit" value="Submit">
+        </form> -->
+
