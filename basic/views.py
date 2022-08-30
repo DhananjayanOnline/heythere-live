@@ -1,10 +1,5 @@
-from multiprocessing import context
-from operator import ne
-from re import template
-from django.dispatch import receiver
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import is_valid_path
+from django.shortcuts import redirect, render
 from django.views import View
 from .models import *
 from .forms import *
