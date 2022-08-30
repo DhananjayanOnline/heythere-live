@@ -7,7 +7,7 @@
 
 <style>
 .header{
-   background-image: url({% static 'images/hero/login-img.jpg' %});
+   background-image: url("{% static 'images/hero/login-img.jpg' %}");
    height: 100%;
    width: 100%;
    top:0 !important;
@@ -48,9 +48,22 @@ font-family: Noto Sans, sans-serif;
 }
 
 
+@media (max-width:1080px){
+    .login_class{
+        display: none;
+    }
+}
+
+@media (min-width:1080px){
+    .notice{
+        display: none;
+    }
+}
+
+
 </style>
 
-<section style="overflow: hidden;">
+<section style="overflow: hidden;" class="login_class">
 
     <nav class="navbar navbar-expand-lg navbar-light " style="z-index: 10; background-color: rgba(0, 0, 0, 0.24);">
 
@@ -118,6 +131,11 @@ font-family: Noto Sans, sans-serif;
     </section>
 </section>
 
+
+
+    <div class="alert alert-warning notice" role="alert" style="margin: 10rem;">
+        <p>Mobile view under constraction,  use desktop to view the site</p>
+     </div>   
 
 
 

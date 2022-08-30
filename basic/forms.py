@@ -59,19 +59,15 @@ class CommentForm(forms.ModelForm):
 
 
 class CircleForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Circle title...'}))
-    circle_creator = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','disabled':True}))
-    neighbourhood = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','disabled':True}))
+    name = forms.CharField(widget=forms.TextInput(attrs={'name':'circle_name','class':'form-control', 'placeholder': 'Circle title...'}))
+    circle_creator = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','style': 'pointer-events: none'}))
+    neighbourhood = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','style': 'pointer-events: none'}))
     image = forms.FileField(widget=forms.FileInput(attrs={'name':'inpFile', 'id':'inpFile'}))
     description = forms.CharField(widget=forms.Textarea(attrs={"rows":3, 'placeholder': 'Circle description...'}))
 
     class Meta:
         model = Circle
         fields = ['name','description','circle_creator','image','neighbourhood','members','cover_photo']
-
-        Widgets = {
-            'circle_creator' : forms.TextInput(attrs={'class':'input disabled'}),
-        }
 
     def __init__(self, *args, **kwargs):
         super(CircleForm, self).__init__(*args, **kwargs)

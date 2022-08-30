@@ -486,12 +486,14 @@ def globalPostPage(request):
 
 
 def createCircle(request):
+    creator = UserRegister.objects.get(username = request.user.userregister)
     if request.method=='POST':
         form = CircleForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('home')
     else:
-        form = CircleForm(initial={'circle_creator':request.user.userregister, 'members':request.user.userregister, 'neighbourhood':request.user.userregister.neighbourhood})
+        form = CircleForm(initial={'circle_creator':creator, 'members':request.user.userregister, 'neighbourhood':request.user.userregister.neighbourhood})
     context = {
         'form':form,
     }
