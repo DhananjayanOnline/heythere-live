@@ -1,7 +1,6 @@
 from datetime import date
 from distutils.command.upload import upload
 from email.policy import default
-from tkinter import CASCADE, Widget
 from django.db import models
 from django.contrib.auth.models import User
 from phone_field import PhoneField
