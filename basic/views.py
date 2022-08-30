@@ -21,9 +21,11 @@ from django.utils.translation import get_language, activate, gettext
 
 # Create your views here.
 
-from django.core.mail import EmailMessage
-from django.conf import settings
-from  django.template.loader import render_to_string
+# --Email--
+# from django.core.mail import EmailMessage
+# from django.conf import settings
+# from  django.template.loader import render_to_string
+# --end of Email--
 
 @unauthenticated_user
 def registerPage(request):
@@ -51,16 +53,16 @@ def registerPage(request):
 
 
             # SMTP Configuration
-            template = render_to_string('basic/email_template.html', {'username': username})
-            email = EmailMessage(
-                'Congratulations! You have successfuly created an account in heythere',
-                template,
-                settings.EMAIL_HOST_USER,
-                [email],
-            )
+            # template = render_to_string('basic/email_template.html', {'username': username})
+            # email = EmailMessage(
+            #     'Congratulations! You have successfuly created an account in heythere',
+            #     template,
+            #     settings.EMAIL_HOST_USER,
+            #     [email],
+            # )
 
-            email.fail_silently=False
-            email.send()
+            # email.fail_silently=False
+            # email.send()
             # End of SMTP Configuration
 
             return redirect('login')
