@@ -1,3 +1,4 @@
+from email import message
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from chat.models import *
