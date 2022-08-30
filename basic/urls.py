@@ -1,5 +1,3 @@
-from ntpath import join
-from turtle import circle
 from django.urls import path
 
 from . import views
