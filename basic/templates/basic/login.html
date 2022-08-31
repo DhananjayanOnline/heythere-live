@@ -1,67 +1,10 @@
+{% load static %}
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
-
-{% load static %}
-
-
-<style>
-.header{
-   background-image: url("{% static 'images/hero/login-img.jpg' %}");
-   height: 100%;
-   width: 100%;
-   top:0 !important;
-   position:fixed;
-   margin-left: -0.5rem;
-}
-
-.header .login{
-background: rgb(0, 0, 0, 0.5);
-width:550px;
-height: 219px;
-margin-top:20px;
-padding:20px;
-border-radius:15px;
-}
-
-.login-box h1{
-color:white;
-margin-top:150px;
-margin-left:365px;
-font-style:italic;
-font-weight: 700;
-font-size: 48px;
-line-height: 52px;
-text-shadow:  1px 4px 30px black;
-font-family: Noto Sans, sans-serif;
-}
+<link rel="stylesheet" type="" href="{% static 'css/login.css' %}">
 
 
-
-.login input{
-    width: 30rem;
-    height: 3rem;
-    margin-bottom: 0rem;
-    border-radius: 0.4rem;
-    border: 0;
-    z-index: 10;
-}
-
-
-@media (max-width:1080px){
-    .login_class{
-        display: none;
-    }
-}
-
-@media (min-width:1080px){
-    .notice{
-        display: none;
-    }
-}
-
-
-</style>
 
 <section style="overflow: hidden;" class="login_class">
 
@@ -78,7 +21,7 @@ font-family: Noto Sans, sans-serif;
     </nav>
     
     
-    <section class="header">
+    <section class="header-login" style="background-image: url({% static 'images/hero/login-img.jpg' %});">
         <div class="login-box">
             <h1 class="">
                     Tap into your
