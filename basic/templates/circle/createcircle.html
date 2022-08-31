@@ -18,7 +18,7 @@
     <div class="card shadow-lg" style="width: 45rem;margin-left: 18rem;margin-top: 0rem; padding: 1rem; padding-top: 0; border-radius: 0 0 1rem 1rem;">
         <div style="margin-top: 1rem;">{{form.name|as_crispy_field}}</div>
         <div>{{form.description|as_crispy_field}}</div>
-        <div class="input disabled">{{form.circle_creator|as_crispy_field}}</div>
+        <div class="d-none">{{form.circle_creator|as_crispy_field}}</div>
 
         <div style="margin-bottom: -1rem;">{{form.image|as_crispy_field}}</div>
         <div class="image-preview" id="imagePreview">

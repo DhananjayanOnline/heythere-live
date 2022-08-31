@@ -60,7 +60,7 @@ class CommentForm(forms.ModelForm):
 
 class CircleForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={'name':'circle_name','class':'form-control', 'placeholder': 'Circle title...'}))
-    circle_creator = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','style': 'pointer-events: none'}))
+    # circle_creator = forms.ModelChoiceField(queryset=UserRegister.objects.all(), widget=forms.TextInput(attrs={'class':'form-control', 'style': 'pointer-events: none'}))
     neighbourhood = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','style': 'pointer-events: none'}))
     image = forms.FileField(widget=forms.FileInput(attrs={'name':'inpFile', 'id':'inpFile'}))
     description = forms.CharField(widget=forms.Textarea(attrs={"rows":3, 'placeholder': 'Circle description...'}))
