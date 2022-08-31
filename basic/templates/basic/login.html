@@ -44,21 +44,27 @@
                             <div class="form-outline mb-1 p-1">
                                 <input type="password" id="form2Example2" class="form-control" name="password" placeholder="Password"/>
                             </div>
+
                             <!-- Submit button -->
                             <center>
                                 <div class="d-grid gap-2 p-2">
                                     <input type="submit" value="Login" class="btn " style="background-color: #36a5b0; border: 0; font-weight: 700; color:white"/>
                                 </div>
-    
                             </center>
                     </div>
-                    
+                        
                 </form>
     
     
                 </div>
             </center>
         </div>
+
+        <center>
+            {% for message in messages %}
+                <p id="messages" style="color: white;">*{{message}}</p>
+            {% endfor %}
+        </center>
     
         <div style="margin-top: 3rem;">
 
@@ -76,8 +82,8 @@
 
 
 
-    <div class="alert alert-warning notice" role="alert" style="margin: 10rem;">
-        <p>Mobile view under constraction,  use desktop to view the site</p>
+    <div class="alert alert-success notice" role="alert" style="margin: 10rem; margin-top: 25rem;">
+        <p class="display-4">Mobile view is under construction🚧,  use desktop or laptop to visit the site</p>
      </div>   
 
 
