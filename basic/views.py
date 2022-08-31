@@ -539,6 +539,7 @@ def createCirclePost(request, circle):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('circle', circle_name)
     else:
         form = PostForm(initial={'circle':circle_name, 'creator':request.user.userregister})
     context = {
