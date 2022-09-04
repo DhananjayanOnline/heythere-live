@@ -25,12 +25,21 @@ class PostForm(forms.ModelForm):
         self.fields['image'].label = False
         # fields = ['creator','caption', 'image', 'local_visibility', 'global_visibility']
 
+class LowerField(forms.CharField):
+    def to_python(self, value):
+        return value.lower()
+
 class CreateUserForm(UserCreationForm):
     # neighbourhood = forms.ModelMultipleChoiceField(queryset=Neighbourhood.objects.all())
+    # username=forms.CharField(widget=forms.TextInput(attrs={'style': 'text-transform:lowercase;'}))
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+
+    # def __init__(self, *args, **kwargs):
+    #     super(CreateUserForm, self).__init__(*args, **kwargs)
+    #     self.fields['username'].widget.attrs.update({'style': 'text-transform: lowercase'})
 
 class UserRegisterForm(forms.ModelForm):
     class Meta:
@@ -43,6 +52,11 @@ class UserRegisterForm2(forms.ModelForm):
         model = UserRegister
         # fields = ['neighbourhood']
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegisterForm2, self).__init__(*args, **kwargs)
+        self.fields['neighbourhood'].label = "Neighbourhood (First Letter in Captital)"
+        self.fields['dob'].label = "Date of Birth (YYYY-MM-DD)"
 
 
 class CommentForm(forms.ModelForm):

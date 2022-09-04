@@ -49,15 +49,16 @@ def room(request, room, display_name):
 
 def checkview(request):
     room = request.POST['room_name']
-    neighbourhood=request.user.userregister
+    neighbourhood=request.user.userregister.neighbourhood
+    print(neighbourhood)
     username = str(request.user)
 
     if Room.objects.filter(name=room).exists():
-        return redirect('/room/'+room+'/?username='+username)
+        return redirect('/room/'+room+'/'+room)
     else:
         new_room = Room.objects.create(name=room, neighbourhood=neighbourhood)
         new_room.save()
-        return redirect('/room/'+room+'/?username='+username)
+        return redirect('/room/'+room+'/'+room)
 
 
 def send(request):

@@ -37,8 +37,6 @@ def registerPage(request):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             neighbourhood = 'no_neighbourhood'
-            n = str(neighbourhood)
-            print(n)
             
             UserRegister.objects.create(
                 user = user,
@@ -688,8 +686,8 @@ def unFriend(request, username):
 def searchBar(request):
     if request.method == 'GET':
         search = request.GET.get('search')
-        users = UserRegister.objects.filter(Q(username__startswith = search)|Q(fname__startswith = search)|Q(lname__startswith = search) )
-        circles = Circle.objects.filter(name__startswith = search)
+        users = UserRegister.objects.filter(Q(username__contains = search)|Q(fname__contains = search)|Q(lname__contains = search)|Q(neighbourhood__contains = search) )
+        circles = Circle.objects.filter(name__contains = search)
         posts = Post.objects.filter(caption__contains = search)
         context = {
             'users':users,
