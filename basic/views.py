@@ -686,9 +686,9 @@ def unFriend(request, username):
 def searchBar(request):
     if request.method == 'GET':
         search = request.GET.get('search')
-        users = UserRegister.objects.filter(Q(username__iexact = search)|Q(fname__contains = search)|Q(lname__contains = search)|Q(neighbourhood__contains = search) )
-        circles = Circle.objects.filter(name__contains = search)
-        posts = Post.objects.filter(caption__contains = search)
+        users = UserRegister.objects.filter(Q(username__icontains = search)|Q(fname__icontains = search)|Q(lname__icontains = search)|Q(neighbourhood__icontains = search) )
+        circles = Circle.objects.filter(name__icontains = search)
+        posts = Post.objects.filter(caption__icontains = search)
         context = {
             'users':users,
             'circles':circles,
